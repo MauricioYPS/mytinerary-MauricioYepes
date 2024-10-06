@@ -32,34 +32,37 @@ export default function Carousel() {
     const next = () => selectNewSlide(true);
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            {/* Carrusel con slides */}
-            <div className="relative w-full max-w-4xl overflow-hidden">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {slides[selectedIndex].map((image, idx) => (
-                        <img
-                            key={idx}
-                            src={`/images/${image}`}
-                            alt={`Slide image ${idx + 1}`}
-                            className="max-w-full h-auto object-cover rounded-lg transition-transform duration-500 ease-in-out"
-                        />
-                    ))}
+        <div className="flex justify-center items-center w-full h-full">
+            <div className="flex flex-col items-center justify-center w-full">
+                {/* Carrusel con slides */}
+                <div className="w-full max-w-full px-10 overflow-hidden">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {slides[selectedIndex].map((image, idx) => (
+                            <img 
+                                key={idx}
+                                src={`/images/${image}`}
+                                alt={`Slide image ${idx + 1}`}
+                                className="max-w-full h-auto object-cover rounded-lg transition-transform duration-500 ease-in-out"
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-            {/* Botones de control */}
-            <div className="flex justify-between w-full max-w-4xl mt-4">
-                <button
-                    onClick={previous}
-                    className="text-2xl text-gray-700 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-300"
-                >
-                    {'<'}
-                </button>
-                <button
-                    onClick={next}
-                    className="text-2xl text-gray-700 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-300"
-                >
-                    {'>'}
-                </button>
+
+                {/* Botones de control */}
+                <div className="flex justify-around w-full max-w-6xl mt-4">
+                    <button
+                        onClick={previous}
+                        className="text-2xl text-gray-700 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-300"
+                    >
+                        {'<'}
+                    </button>
+                    <button
+                        onClick={next}
+                        className="text-2xl text-gray-700 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-300"
+                    >
+                        {'>'}
+                    </button>
+                </div>
             </div>
         </div>
     );
