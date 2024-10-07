@@ -5,7 +5,7 @@ export default function Footer() {
 
     return (
         <>
-            <div className="w-full h-28 bg-zinc-700 flex">
+            <div className="w-full h-28 bg-gradient-to-r from-blue-500 via-sky-500 to-cyan-500 flex">
                 <div className="w-1/4 h-full border-2">
                     {/* Puedes agregar contenido aquí */}
                 </div>
@@ -14,7 +14,7 @@ export default function Footer() {
                 </div>
                 <div className="w-1/4 h-full flex justify-end relative border-2">
                     {/* Contenedor del menú */}
-                    <div className={`absolute bottom-28 right-0 bg-white shadow-lg rounded-lg transition-all duration-300 ${opened ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'} w-64 p-4`}>
+                    <div className={`absolute  bottom-28 right-0 bg-white shadow-lg rounded-lg transition-all duration-300 ${opened ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'} w-64 p-4`}>
                         <h1 className="text-xl font-bold mb-2 text-gray-700">Contact Us</h1>
                         <p className="text-sm text-gray-600">Phone: 555-444-222</p>
                         <p className="text-sm text-gray-600">Email: cities@outlook.eu</p>

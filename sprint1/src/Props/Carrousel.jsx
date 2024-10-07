@@ -110,7 +110,7 @@ export default function Carousel() {
     const next = () => selectNewSlide(true);
 
     return (
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="flex justify-center items-center w-full h-full mb-24">
             <div className="flex flex-col items-center justify-center w-full">
                 {/* Carrusel con slides */}
                 <div className="w-full max-w-full px-10 overflow-hidden">
