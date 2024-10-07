@@ -1,4 +1,16 @@
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .h-CTA{
     height: 40vw;
+}
+.h-szs-lg{
+font-size: 12vw ;
+margin-top: -6vw;    
+}
+.h-zsz-md{
+    font-size: 6vw;
+}
+.font-peps{
+    font-family:Verdana, Geneva, Tahoma, sans-serif
 }
