@@ -6,14 +6,23 @@ export default function Footer() {
     return (
         <>
             <div className="w-full h-28 bg-gradient-to-r from-blue-500 via-sky-500 to-cyan-500 flex">
-                <div className="w-1/4 h-full border-2">
-                    {/* Puedes agregar contenido aquí */}
+                <div className="w-1/4 h-full flex justify-center items-center"><button>
+                    <img className="w-6 h-6 mx-3" src="https://img.icons8.com/?size=100&id=118467&format=png&color=000000" alt="" />
+                </button>
+                    <button>
+                        <img className="w-6 h-6 mx-3" src="https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=000000" alt="" />
+                    </button>
+                    <button>
+                        <img className="w-6 h-6 mx-3" src="https://img.icons8.com/?size=100&id=59813&format=png&color=000000" alt="" />
+                    </button>
+                    <button>
+                        <img className="w-6 h-6 mx-3" src="https://img.icons8.com/?size=100&id=123922&format=png&color=000000" alt="" />
+                    </button>
                 </div>
-                <div className="w-2/4 h-full border-2">
-                    {/* Puedes agregar contenido aquí */}
+                <div className="w-2/4 h-full flex items-center">
+                    <p className="text-center">Thank you for visiting our website, on your left you can find our social networks and on the right our contact information</p>
                 </div>
-                <div className="w-1/4 h-full flex justify-end relative border-2">
-                    {/* Contenedor del menú */}
+                <div className="w-1/4 h-full flex justify-center relative items-center">
                     <div className={`absolute  bottom-28 right-0 bg-white shadow-lg rounded-lg transition-all duration-300 ${opened ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'} w-64 p-4`}>
                         <h1 className="text-xl font-bold mb-2 text-gray-700">Contact Us</h1>
                         <p className="text-sm text-gray-600">Phone: 555-444-222</p>
@@ -21,7 +30,6 @@ export default function Footer() {
                         <p className="text-sm text-gray-600">NIT: 7777777</p>
                     </div>
 
-                    {/* Botón del menú */}
                     <button
                         className="bg-slate-200 w-12 h-12 flex justify-center items-center rounded-full shadow-md hover:bg-slate-500 active:bg-slate-600 transition-colors duration-300"
                         onClick={() => setOpened(!opened)}
