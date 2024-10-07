@@ -14,7 +14,11 @@ export default {
         },
       ],
     },
-    extend: {},
+    extend: {
+      backgroundImage:{
+        'founded-back': "url('./public/images/image_10.jpg')"
+      }
+    },
   },
   plugins: [],
 }
