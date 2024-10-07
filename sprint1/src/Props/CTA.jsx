@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
+import { useNavigate } from 'react-router-dom'
 export default function CallToAction() {
     const [animation, setAnimation] = useState(false)
+    const navigate = useNavigate();
+    function handleNavigate() {
+
+        navigate("/cities");
+    }
+
 
     useEffect(() => {
         setAnimation(true)
-        console.log(animation);
-        
-    },[]);
+    }, []);
 
 
     return (<>
@@ -21,9 +26,9 @@ h-36 w-full">
         <div className="h-CTA bg-cover bg-local mb-20 flex mt-16"
             style={{ backgroundImage: "url('https://himbatours.com/media/k2/items/cache/6b88c34cd64b83eac2709d6c8c29fd54_XL.jpg')" }}>
             <div className='w-full h-full mb-16 flex flex-col justify-center font-bold'>
-                <h3 className={`h-zsz-md ml-7 text-sky-500  mt-20 transition-transform duration-1000 ease-out${animation ? "translate-x-0" : "-translate-x-full" }`}>Adventure and</h3>
+                <h3 className={`h-zsz-md ml-7 text-sky-500  mt-20 transition-transform duration-1000 ease-out${animation ? "translate-x-0" : "-translate-x-full"}`}>Adventure and</h3>
                 <h1 className="h-szs-lg text-white ml-5">Navigation </h1>
-                <div className='flex justify-center'><button className='lg:w-52 lg:h-14 md:w-40 md:h-10 bg-slate-500 text-white px-2 rounded-lg hover:bg-slate-700 active:bg-slate-800 text-xl md:text-base sm:text-sm sm:h-10 '>More information</button>
+                <div className='flex justify-center'><button className='lg:w-52 lg:h-14 md:w-40 md:h-10 bg-slate-500 text-white px-2 rounded-lg hover:bg-slate-700 active:bg-slate-800 text-xl md:text-base sm:text-sm sm:h-10 ' onClick={() => handleNavigate()}>More information</button>
                 </div>
 
             </div>

@@ -76,11 +76,10 @@ export default function Carousel() {
         }
     ];
 
-    // Usar reduce para dividir las imágenes en grupos de 4
     const slides = cities.reduce((resultArray, item, index) => {
         const chunkIndex = Math.floor(index / 4);
         if (!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = []; // Crea un nuevo grupo
+            resultArray[chunkIndex] = [];
         }
         resultArray[chunkIndex].push(item);
         return resultArray;
@@ -88,21 +87,18 @@ export default function Carousel() {
 
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    // Cambiar el slide completo
     const selectNewSlide = (next = true) => {
         const nextIndex = next
-            ? (selectedIndex + 1) % slides.length // Cicla al inicio cuando llega al final
-            : (selectedIndex - 1 + slides.length) % slides.length; // Cicla al final si retrocede del primer slide
+            ? (selectedIndex + 1) % slides.length
+            : (selectedIndex - 1 + slides.length) % slides.length;
         setSelectedIndex(nextIndex);
     };
 
-    // Automático: cambiar el slide cada 3 segundos
     useEffect(() => {
         const interval = setInterval(() => {
-            selectNewSlide(true); // Avanzar automáticamente al siguiente slide
-        }, 6000); // Cambia el slide cada 6 segundos
+            selectNewSlide(true);
+        }, 6000);
 
-        // Limpiar el intervalo cuando el componente se desmonte
         return () => clearInterval(interval);
     }, [selectedIndex]);
 
@@ -112,7 +108,6 @@ export default function Carousel() {
     return (
         <div className="flex justify-center items-center w-full h-full mb-24">
             <div className="flex flex-col items-center justify-center w-full">
-                {/* Carrusel con slides */}
                 <div className="w-full max-w-full px-10 overflow-hidden">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {slides[selectedIndex].map((item, idx) => (
@@ -129,9 +124,9 @@ export default function Carousel() {
                                     <div className="h-24 shadow-inner">
                                         <p className="text-start text-gray-700 text-xl ml-6">{item.country}</p>
                                         <p className="ml-6">A good option... <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-</svg>
-</p>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                        </svg>
+                                        </p>
                                     </div>
                                     <div className="bg-slate-200 w-full h-8 shadow-lg">
                                         <p className="text-lg font-peps ml-6">{item.city}</p>
@@ -145,7 +140,6 @@ export default function Carousel() {
                     </div>
                 </div>
 
-                {/* Botones de control */}
                 <div className="flex justify-around w-full max-w-6xl mt-4">
                     <button
                         onClick={previous}
