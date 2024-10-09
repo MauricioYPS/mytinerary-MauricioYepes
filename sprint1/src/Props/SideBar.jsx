@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 export default function SideBar() {
     const navigate = useNavigate();
 
-
     function handleClick() {
-        navigate("/cities")
+        navigate("/cities");
         setOpen(false);
     }
 
@@ -14,7 +13,16 @@ export default function SideBar() {
 
     return (
         <>
-            <div className="ml-3 z-50 relative">
+                    <div className="flex justify-between items-center p-4 bg-cyan-600 text-white sm:hidden space-x-4 rounded-2xl">
+                <div className="flex w-2/3 justify-around">
+                    <button onClick={() => handleClick()}>Cities</button>
+                    <button className="mx-2">Calendar</button>
+                    <button className="">Trips</button>
+                    <button className="mx-2">Goals</button>
+                </div>
+            </div>
+
+            <div className="ml-3 z-50 relative sm:block hidden">
                 <button className="bg-white flex justify-center" onClick={() => setOpen(!open)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -33,14 +41,11 @@ export default function SideBar() {
                             </button>
 
                             <div className="text-center bg-center text-white text-2xl hover:bg-slate-200 cursor-pointer py-3 mb-2 hover:text-slate-950">
-                                <button onClick={() => handleClick()
-                                }>
-                                    Cities
-                                </button>
+                                <button onClick={() => handleClick()}>Cities</button>
                             </div>
                             <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Calendar</div>
                             <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Trips</div>
-                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Visteds</div>
+                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Visiteds</div>
                             <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Goals</div>
                         </div>
                     )}

@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.body{
+    font-family: "Edu AU VIC WA NT Guides", cursive;
+
+}
 .h-CTA{
     height: 40vw;
 }
