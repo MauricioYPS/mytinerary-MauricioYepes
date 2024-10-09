@@ -109,35 +109,69 @@ export default function Carousel() {
         <div className="flex justify-center items-center w-full h-full mb-24">
             <div className="flex flex-col items-center justify-center w-full">
                 <div className="w-full max-w-full px-10 overflow-hidden">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {slides[selectedIndex].map((item, idx) => (
-                            <div className="rounded-2xl my-3" key={idx}>
-                                <div className="w-full sm:h-32 md:h-40 lg:h-52">
-                                    <img
-                                        src={`/images/${item.image}`}
-                                        alt={`Slide image ${idx + 1}`}
-                                        className="max-w-full w-full h-full object-cover rounded-lg transition-transform duration-500 ease-in-out"
-                                    />
-                                </div>
+                    <div className="sm:block hidden">
+                        <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-4 gap-4">
+                            {slides[selectedIndex].map((item, idx) => (
+                                <div className="rounded-2xl my-3" key={idx}>
+                                    <div className="w-full sm:h-auto md:h-40 lg:h-52">
+                                        <img
+                                            src={`/images/${item.image}`}
+                                            alt={`Slide image ${idx + 1}`}
+                                            className="max-w-full w-full h-full object-cover rounded-lg transition-transform duration-500 ease-in-out"
+                                        />
+                                    </div>
 
-                                <div className="h-44 bg-slate-100 rounded md:h-48">
-                                    <div className="h-24 shadow-inner">
-                                        <p className="text-start text-gray-700 text-xl ml-6">{item.country}</p>
-                                        <p className="ml-6">A good option... <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                                        </svg>
-                                        </p>
-                                    </div>
-                                    <div className="bg-slate-200 w-full h-8 shadow-lg">
-                                        <p className="text-lg font-peps ml-6">{item.city}</p>
-                                    </div>
-                                    <div className="bg-slate-50 w-full h-8 shadow-inner">
-                                        <p className="text-lg font-peps ml-6">{item.department}</p>
+                                    <div className="h-44 bg-slate-100 rounded md:h-48">
+                                        <div className="h-24 shadow-inner">
+                                            <p className="text-start text-gray-700 text-xl ml-6">{item.country}</p>
+                                            <p className="ml-6">A good option... <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                            </svg>
+                                            </p>
+                                        </div>
+                                        <div className="bg-slate-200 w-full h-8 shadow-lg">
+                                            <p className="text-lg font-peps ml-6">{item.city}</p>
+                                        </div>
+                                        <div className="bg-slate-50 w-full h-8 shadow-inner">
+                                            <p className="text-lg font-peps ml-6">{item.department}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
+                    <div className="sm:hidden ">
+                        <div className=" grid grid-cols-1">
+                            {slides[selectedIndex].map((item, idx) => (
+                                <div className="rounded-2xl my-3" key={idx}>
+                                    <div className="w-full sm:h-auto md:h-40 lg:h-52">
+                                        <img
+                                            src={`/images/${item.image}`}
+                                            alt={`Slide image ${idx + 1}`}
+                                            className="max-w-full w-full h-full object-cover rounded-lg transition-transform duration-500 ease-in-out"
+                                        />
+                                    </div>
+
+                                    <div className="h-44 bg-slate-100 rounded md:h-48">
+                                        <div className="h-24 shadow-inner">
+                                            <p className="text-start text-gray-700 text-xl ml-6">{item.country}</p>
+                                            <p className="ml-6">A good option... <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                            </svg>
+                                            </p>
+                                        </div>
+                                        <div className="bg-slate-200 w-full h-8 shadow-lg">
+                                            <p className="text-lg font-peps ml-6">{item.city}</p>
+                                        </div>
+                                        <div className="bg-slate-50 w-full h-8 shadow-inner">
+                                            <p className="text-lg font-peps ml-6">{item.department}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                 </div>
 
                 <div className="flex justify-around w-full max-w-6xl mt-4">

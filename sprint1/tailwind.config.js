@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: [
     "./index.html",
@@ -17,6 +18,9 @@ export default {
     extend: {
       backgroundImage:{
         'founded-back': "url('./public/images/image_10.jpg')"
+      },
+      fontFamily:{
+        'mTFont': ' font-family: "Edu AU VIC WA NT Guides", cursive;'
       }
     },
   },
