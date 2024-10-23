@@ -32,7 +32,7 @@ export default function Input({ onFilter }) {
             </div>
             {/*============================== */}
             <div className="sm:hidden">
-                <div className="w-full h-16 flex justify-between mt-10 mb-10 border-2">
+                <div className="w-full h-16 flex justify-between mt-10 mb-10">
                 <div className="w-24 h-full ml-8">
                     <button className=" bg-blue-500 text-white text-sm font-semibold w-full h-full rounded hg" onClick={() => handleNavigate()}>
                         Home
