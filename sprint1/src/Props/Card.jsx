@@ -33,7 +33,7 @@ export default function Cards({ cities }) {
         </div>
         {/*==================================================================*/ }
         <div className="sm:hidden">
-           <div className="w-full flex flex-wrap border-2 border-blue-400 justify-around">
+           <div className="w-full flex flex-wrap  justify-around">
             {cities.map((city) => (
                 <div key={city._id} className="bg-white shadow-lg rounded-lg overflow-hidden w-96 mb-6 sm:w-72">
                     <img src={city.photo} alt={city.name} className="w-full h-48 object-cover" />
