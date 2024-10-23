@@ -10,7 +10,8 @@ export default function Cards({ cities }) {
     return (
         <>
         <div className="sm:block hidden">
-           <div className=" border-2 border-blue-400 flex flex-wrap justify-around">
+           <div className="flex flex-wrap justify-around"
+>
             {cities.map((city) => (
                 <div key={city._id} className="bg-white shadow-lg rounded-lg mb-6 w-96  ">
                     <img src={city.photo} alt={city.name} className="w-full h-56 object-cover" />
