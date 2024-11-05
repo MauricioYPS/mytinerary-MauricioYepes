@@ -145,7 +145,7 @@ export default function Itinerary() {
                     {/* Header */}
                     <div className="text-center mb-8 flex justify-center  flex-col-reverse">
                         <h1 className="text-4xl font-bold text-gray-800">{city.name}</h1>
-                    <button className=" bg-blue-500 text-white text-sm font-semibold w-32 h-12 ml-12 rounded hg" onClick={() => handleNavigate()}>
+                    <button className=" bg-blue-500 text-white text-sm font-semibold w-24 h-10 ml-2 rounded hg" onClick={() => handleNavigate()}>
                         Cities
                     </button>
                     </div>
