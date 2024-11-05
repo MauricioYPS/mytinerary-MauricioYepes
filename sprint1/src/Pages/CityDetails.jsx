@@ -1,13 +1,33 @@
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCities } from "../store/reducers/cityReducer";
+import { useEffect } from "react";
+import React from "react";
 export default function CityDetails() {
-    const location = useLocation();
-    const { city } = location.state;
+    // const location = useLocation();
+    // const { city } = location.state;
     const navigate = useNavigate()
 
     function handleNavigate() {
         navigate(-1)
+    }
+    const  city1 = useParams().id
+    const city = useSelector((state) => 
+        state.cities.cities.find((city) => city._id == city1)
+    );
+
+    useEffect(() => {
+        dispatch(fetchCities());
+    }, []);
+
+    const dispatch = useDispatch();
+ console.log(city);
+ 
+
+    if (!city) {
+        return <p>City not found</p>;
     }
     return (<>
      <div className="sm:block hidden">

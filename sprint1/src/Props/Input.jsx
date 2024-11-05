@@ -23,7 +23,9 @@ export default function Input() {
         
     };
 
-    console.log(dispatch);
+    useEffect(() => {
+        dispatch(fetchCities());
+    }, [dispatch]);
 
     return (
         <>

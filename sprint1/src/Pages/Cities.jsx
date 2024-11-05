@@ -6,27 +6,9 @@ import { fetchCities } from "../store/reducers/cityReducer.js";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Cities() {
-    // const [cities, setCities] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        setIsLoading(true);
-        let urlApi = `http://localhost:8080/api/cities/all?name=${searchTerm}`;
-
-        fetch(urlApi)
-            .then(response => response.json())
-            .then(data => {
-                setCities(data.response);
-            })
-            .catch((error) => {
-                console.error('Error fetching cities:', error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-
-    }, [searchTerm]);
 
     const {cities} = useSelector(state => state.cities)
     

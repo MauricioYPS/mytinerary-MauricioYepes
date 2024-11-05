@@ -1,5 +1,6 @@
 // src/redux/reducers/cityReducer.js
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
+import { getCities } from '../actions/cityActions';
 
 
 

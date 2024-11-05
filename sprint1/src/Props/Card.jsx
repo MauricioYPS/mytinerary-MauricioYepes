@@ -1,15 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchCities } from "../store/reducers/cityReducer";
 
 export default function Cards() {
     const navigate = useNavigate();
 
-    function handleNavigate(city) {
-        navigate(`/citySelected/${city._id}`, { state: { city } });
-    }
 
-        const dispatch = useDispatch(); 
-        const {cities} = useSelector(state => state.cities)
+
+    
+            const dispatch = useDispatch(); 
+            const {cities} = useSelector(state => state.cities)
+            function handleNavigate(cityId) {
+
+                navigate(`/citySelected/${cityId}`);
+            }
+
 
     
     return (
@@ -27,9 +33,9 @@ export default function Cards() {
                         <p className="mt-2 text-gray-700">{city.description}</p>
                         <button
                             className="inline-block bg-blue-500 text-white text-xs font-semibold mt-4 px-2 py-1 rounded hover:bg-blue-800 active:bg-white"
-                            onClick={() => handleNavigate(city)}
+                            onClick={() => handleNavigate(city._id)}
                         >
-                            {city.badge}
+                            <p>Itinerary</p>
                         </button>
                     </div>
                 </div>
@@ -49,9 +55,9 @@ export default function Cards() {
                         <p className="mt-2 text-gray-700">{city.description}</p>
                         <button
                             className="inline-block bg-blue-500 text-white text-xs font-semibold mt-4 px-2 py-1 rounded hover:bg-blue-800 active:bg-white"
-                            onClick={() => handleNavigate(city)}
+                            onClick={() => handleNavigate(city._id)}
                         >
-                            {city.badge}
+                            <p>Itinerary</p>
                         </button>
                     </div>
                 </div>
