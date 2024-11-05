@@ -20,7 +20,7 @@ export default function Cards() {
     
     return (
         <>
-        <div className="sm:block hidden h-screen">
+        <div className="sm:block hidden h-full">
            <div className="flex flex-wrap justify-around"
 >
             {cities.map((city) => (
@@ -43,7 +43,7 @@ export default function Cards() {
         </div>  
         </div>
         {/*==================================================================*/ }
-        <div className="sm:hidden h-screen">
+        <div className="sm:hidden h-full">
            <div className="w-full flex flex-wrap  justify-around">
             {cities.map((city) => (
                 <div key={city._id} className="bg-white shadow-lg rounded-lg overflow-hidden w-96 mb-6 sm:w-72">

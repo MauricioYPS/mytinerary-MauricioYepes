@@ -21,7 +21,7 @@ export default function Cities() {
         urlB = 'https://marketplace.canva.com/EAF5FxQlSGQ/1/0/1600w/canva-blue-and-white-illustrated-sky-and-airplane-desktop-wallpaper-zYA4XGHAYo0.jpg'
     }
     return (
-        <div className=" h-full bg-no-repeat bg-center bg-cover "
+        <div className=" h-full  bg-no-repeat bg-center bg-cover "
 
             style={{
                 backgroundImage: `url(${urlB})`,
