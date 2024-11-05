@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import Input from "../Props/Input.jsx";
 import Cards from "../Props/Card.jsx";
+import { fetchCities } from "../store/reducers/cityReducer.js";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Cities() {
-    const [cities, setCities] = useState([]);
+    // const [cities, setCities] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +27,9 @@ export default function Cities() {
             });
 
     }, [searchTerm]);
+
+    const {cities} = useSelector(state => state.cities)
+    
 
     let urlB =''
     if (cities != 0) {

@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Cards({ cities }) {
+export default function Cards() {
     const navigate = useNavigate();
 
     function handleNavigate(city) {
         navigate(`/citySelected/${city._id}`, { state: { city } });
     }
 
+        const dispatch = useDispatch(); 
+        const {cities} = useSelector(state => state.cities)
+
+    
     return (
         <>
         <div className="sm:block hidden">
