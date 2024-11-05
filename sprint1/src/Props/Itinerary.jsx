@@ -124,7 +124,7 @@ export default function Itinerary() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 italic text-center">Don't have any itineraries yet</p>
+                            <p className="text-gray-500 italic text-center">No itineraries yet for this city</p>
                         )}
                         {/* Div desplegable con mensaje de construcción */}
                         <div className={`${open ? "max-h-96" : "max-h-0"} flex flex-wrap justify-center transition-all duration-300 overflow-hidden bg-gray-800 rounded-lg`}>
@@ -237,7 +237,7 @@ export default function Itinerary() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 italic text-center">Don't have any itineraries yet</p>
+                            <p className="text-gray-500 italic text-center">No itineraries yet for this city</p>
                         )}
                         {/* Div desplegable con mensaje de construcción */}
                         <div className={`${open ? "max-h-96" : "max-h-0"} flex flex-wrap justify-center transition-all duration-300 overflow-hidden bg-gray-800 rounded-lg`}>
