@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCities } from "../store/reducers/cityReducer";
 import { useEffect } from "react";
 import React from "react";
-
 export default function CityDetails() {
     const navigate = useNavigate();
 
@@ -14,15 +13,13 @@ export default function CityDetails() {
     const citySelected = useParams().id;
     const dispatch = useDispatch();
 
-    const city = useSelector((state) =>
-        state.cities.cities.find((city) => city._id === citySelected)
-    );
-
-    const itineraries = useSelector((state) => {
+    const {city, itineraries} = useSelector((state) =>{
         const city = state.cities.cities.find((city) => city._id === citySelected);
-        return city?.itinerary ? [city.itinerary] : []; // Asegúrate de devolver un array
-    });
-
+        const itineraries = city?.itinerary ? [city.itinerary] : []; // Asegúrate de devolver un array
+        return {city, itineraries};
+    }
+        
+    );
     useEffect(() => {
         dispatch(fetchCities());
     }, [dispatch]);
