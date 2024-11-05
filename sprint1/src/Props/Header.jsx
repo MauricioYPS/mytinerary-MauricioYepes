@@ -1,7 +1,7 @@
 import SideBar from "./sidebar"
 function Header() {
     return (<>
-        <div className="bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-600 text-center w-full flex justify-around items-center fixed h-40 ">
+        <div className="bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-600 text-center w-full flex justify-around items-center fixed h-28 ">
             <div className="w-1/4 flex justify-normal ml-10">
                 <SideBar></SideBar>
 
