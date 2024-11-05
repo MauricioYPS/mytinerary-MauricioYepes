@@ -19,7 +19,7 @@ export default function CallToAction() {
 
 
         <div className="border-2 border-y-white
-h-36 w-full">
+h-28 w-full">
         </div>
         <div className='sm:block hidden'>
             <div className='w-full flex justify-center items-center bg-cyan-600 md:h-48 sm:h-52'>

@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
-export default function Input({ onFilter }) {
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCities } from "../store/reducers/cityReducer";
+import { useEffect } from "react";
+export default function Input() {
     const handleChange = (event) => {
         onFilter(event.target.value);
     };
@@ -9,6 +12,20 @@ export default function Input({ onFilter }) {
         navigate('/home')
     }
 
+    const dispatch = useDispatch();
+    const {search} = useSelector(state => state.cities)
+    
+
+    const handleSearch = (event) => {
+        const searchTerm = event.target.value;
+        dispatch({ type: 'cities/changeSearch', payload: searchTerm });
+        dispatch(fetchCities(searchTerm));
+        
+    };
+
+    useEffect(() => {
+        dispatch(fetchCities());
+    }, [dispatch]);
 
     return (
         <>
@@ -25,7 +42,8 @@ export default function Input({ onFilter }) {
                             type="text"
                             className="bg-slate-500 w-full h-full rounded-lg"
                             placeholder="  Search cities.."
-                            onChange={handleChange}
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </div>
                 </div>
@@ -43,7 +61,8 @@ export default function Input({ onFilter }) {
                             type="text"
                             className="bg-slate-500 w-full h-full rounded-lg"
                             placeholder="  Search cities.."
-                            onChange={handleChange}
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </div>
                 </div>
