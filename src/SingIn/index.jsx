@@ -17,6 +17,10 @@ export default function SingIn() {
         dispatch(login({email, password}));
 
     };
+    const LoginWithGoogle = () => {
+        window.location.href="http://localhost:8080/api/auth/signin/google";
+      };
+
     const loading = authStore.loading;
     const error = authStore.error;
     return (
@@ -54,12 +58,20 @@ export default function SingIn() {
                         onSubmit={handleSubmit}>
                         Login
                     </button>
+
+                    
                     {loading && <p className="text-sm text-gray-600">Loading...</p>}
                     {error && <p className="text-sm text-red-600">{error}</p>}
                 </form>
+                <button
+                        type="submit"
+                        className="w-full bg-slate-500 text-white font-medium py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-4"
+                        onClick={()=>LoginWithGoogle()}>
+                        Login GOOGlE
+                    </button>
                 <p className="mt-4 text-sm text-center text-gray-600">
                     Don't have an account?{" "}
-                    <a href="/register" className="text-blue-500 hover:underline">
+                    <a href="/singUp" className="text-blue-500 hover:underline">
                         Sign up
                     </a>
                 </p>
