@@ -1,7 +1,17 @@
 import { useState } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function SideBar() {
+
+    const routes =[
+       { to : "/",text: "Home"},,
+       { to : "/cities",text: "Cities"},
+       { to : "/",text: "Calendar"},
+       { to : "/",text: "Trips"},
+    ]
+    const token = useSelector((state) => state.authStore.token);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     function handleClick() {
@@ -9,17 +19,27 @@ export default function SideBar() {
         setOpen(false);
     }
 
+    function handleClickLogin() {
+        navigate("/singIn")
+        setOpen(false);
+    }
+
     const [open, setOpen] = useState(false);
 
     return (
         <>
-                    <div className="flex justify-between items-center p-4 bg-cyan-600 text-white sm:hidden space-x-4 rounded-2xl">
-                <div className="flex w-2/3 justify-around">
+            <div className="flex justify-between items-center p-4 bg-cyan-600 text-white sm:hidden space-x-4 rounded-2xl">
+                {/* <div className="flex w-full justify-around p-2 border-2">
                     <button onClick={() => handleClick()}>Cities</button>
-                    <button className="mx-2">Calendar</button>
+                    <button onClick={() => handleClickLogin()}>Calendar</button>
                     <button className="">Trips</button>
                     <button className="mx-2">Goals</button>
-                </div>
+                </div> */}
+                {/* {
+                    routes.map((route, index) => (
+                        <button key={route.to} className="bg-slate-400 p-2 rounded-lg" onClick={() => navigate(route.to)}>{route.text}</button>
+                    ))
+                } */}
             </div>
 
             <div className="ml-3 z-50 relative sm:block hidden">
@@ -43,7 +63,8 @@ export default function SideBar() {
                             <div className="text-center bg-center text-white text-2xl hover:bg-slate-200 cursor-pointer py-3 mb-2 hover:text-slate-950">
                                 <button onClick={() => handleClick()}>Cities</button>
                             </div>
-                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Calendar</div>
+                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">
+                                <button onClick={() => handleClickLogin()}>Calendar</button></div>
                             <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Trips</div>
                             <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Visiteds</div>
                             <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Goals</div>
