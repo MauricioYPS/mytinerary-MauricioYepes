@@ -40,6 +40,11 @@ const initialState = {
         state.user = action.payload.user
         state.token = action.payload.token
     })
+    builder.addCase("logout", (state,action) => {
+        state.user = null
+        state.token = null
+        localStorage.removeItem("token")
+    })
 })
 
 export default authReducer

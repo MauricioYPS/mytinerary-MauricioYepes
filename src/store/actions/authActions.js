@@ -6,6 +6,8 @@ const setUser = createAction("setUser",(datos)=>{
         payload:datos
     }
 });
+const logout = createAction("logout");
+
 const login = createAsyncThunk("login",async({email,password})=>{
     console.log("entrado al login");
     
@@ -24,4 +26,5 @@ return response.data
 
 })
 
-export  {login,setUser}
+
+export  {login,setUser,logout};

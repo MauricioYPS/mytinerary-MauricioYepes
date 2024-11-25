@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function SideBar() {
 
-    const routes =[
-       { to : "/",text: "Home"},,
-       { to : "/cities",text: "Cities"},
-       { to : "/",text: "Calendar"},
-       { to : "/",text: "Trips"},
+    const routes = [
+        { to: "/", text: "Home",requiredAuth: false }, ,
+        { to: "/cities", text: "Cities",requiredAuth: true },
     ]
     const token = useSelector((state) => state.authStore.token);
     const dispatch = useDispatch();
@@ -28,18 +26,7 @@ export default function SideBar() {
 
     return (
         <>
-            <div className="flex justify-between items-center p-4 bg-cyan-600 text-white sm:hidden space-x-4 rounded-2xl">
-                {/* <div className="flex w-full justify-around p-2 border-2">
-                    <button onClick={() => handleClick()}>Cities</button>
-                    <button onClick={() => handleClickLogin()}>Calendar</button>
-                    <button className="">Trips</button>
-                    <button className="mx-2">Goals</button>
-                </div> */}
-                {/* {
-                    routes.map((route, index) => (
-                        <button key={route.to} className="bg-slate-400 p-2 rounded-lg" onClick={() => navigate(route.to)}>{route.text}</button>
-                    ))
-                } */}
+            <div className="flex justify-between items-center p-4 bg-cyan-600 text-white sm:hidden  rounded-2xl border-2 w-96vw w-96">
             </div>
 
             <div className="ml-3 z-50 relative sm:block hidden">
@@ -59,15 +46,10 @@ export default function SideBar() {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                                 </svg>
                             </button>
-
-                            <div className="text-center bg-center text-white text-2xl hover:bg-slate-200 cursor-pointer py-3 mb-2 hover:text-slate-950">
-                                <button onClick={() => handleClick()}>Cities</button>
-                            </div>
-                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">
-                                <button onClick={() => handleClickLogin()}>Calendar</button></div>
-                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Trips</div>
-                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Visiteds</div>
-                            <div className="text-center bg-center text-white text-2xl hover:text-slate-950 hover:bg-slate-200 cursor-pointer py-3 mb-2">Goals</div>
+                            {routes.map((route, index) => 
+                                (!route.requiredAuth || token) && (
+                                <button className="w-full text-center bg-center text-white text-2xl hover:bg-slate-200 cursor-pointer py-3 mb-2 hover:text-slate-950 flex justify-center" key={index} onClick={() => navigate(route.to)}>{route.text}</button>
+                            ))}
                         </div>
                     )}
                 </div>

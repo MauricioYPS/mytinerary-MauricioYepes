@@ -20,6 +20,7 @@ import { set } from 'mongoose'
 import { setUser } from './store/actions/authActions'
 import PrivateRoute from './Props/PrivateRoute'
 import SignRoute from './Props/SignRoute'
+import SingUp from './Pages/SignUp'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "/cities", element:<PrivateRoute> <Cities></Cities></PrivateRoute>},
       { path: "/citySelected/:id", element: <City></City> },
       { path: "/singIn", element: <SignRoute><SingIn></SingIn></SignRoute> },
+      { path: "/singUp", element: <SingUp></SingUp> },
     ],
   },
   { path: "/*", element: <NotFound></NotFound> },
@@ -54,10 +56,13 @@ const loginWithToken = async (token) => {
 }
 function App() {
   const dispatch = useDispatch(setUser);
+  const dispatch2 = useDispatch(setUser);
   let token = localStorage.getItem("token");
+  let photoUrl = localStorage.getItem("photoUrl");
   if (token) {
     loginWithToken(token).then((user)=>{
       dispatch(setUser({user,token}))
+      dispatch2(setUser({photoUrl}))
     })
 
   }
