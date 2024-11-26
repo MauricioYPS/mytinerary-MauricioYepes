@@ -162,9 +162,11 @@ const RegisterForm = () => {
                             
                         />
                     </div>
-                    <select name="country" id="">
+                    <select name="country" id=""
+                    value={formData.country} onChange={handleChange} required
+                    >
                                             {countries.map((country,index) => (
-                            <option key={index} name="country" type="select" value={formData.country} onChange={handleChange} required>
+                            <option key={index} name="country" type="select" >
                                 {country.name}    
                             </option>
                         ))}

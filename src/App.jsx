@@ -56,13 +56,10 @@ const loginWithToken = async (token) => {
 }
 function App() {
   const dispatch = useDispatch(setUser);
-  const dispatch2 = useDispatch(setUser);
   let token = localStorage.getItem("token");
-  let photoUrl = localStorage.getItem("photoUrl");
   if (token) {
     loginWithToken(token).then((user)=>{
       dispatch(setUser({user,token}))
-      dispatch2(setUser({photoUrl}))
     })
 
   }

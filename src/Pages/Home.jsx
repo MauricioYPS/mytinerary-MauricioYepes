@@ -33,7 +33,6 @@ export default function Home() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const token = params.get('token');
@@ -42,8 +41,8 @@ export default function Home() {
             loginWithToken(token).then((user) => {
                 dispatch(setUser({ user, token }))
             })
-
         }
+
         navigate("/")
 
     }
