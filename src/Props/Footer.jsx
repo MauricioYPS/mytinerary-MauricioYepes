@@ -27,9 +27,10 @@ export default function Footer() {
               <button className="btn btn-muted" onClick={() => setOpened(!opened)}>Contact</button>
               <div className={`absolute right-0 mt-3 w-64 rounded-xl border border-white/10 bg-slate-900/90 backdrop-blur-md p-4 shadow-xl transition origin-top-right ${opened ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`}>
                 <h3 className="text-lg font-semibold mb-1">Contact Us</h3>
-                <p className="text-sm text-slate-300">Phone: 555-444-222</p>
-                <p className="text-sm text-slate-300">Email: cities@outlook.eu</p>
+                <p className="text-sm text-slate-300">Phone: 3227682475</p>
+                <p className="text-sm text-slate-300">Email: devmauricioy@gmail.com</p>
                 <p className="text-sm text-slate-300">NIT: 7777777</p>
+                
               </div>
             </div>
           </div>
