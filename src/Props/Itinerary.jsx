@@ -1,256 +1,237 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCities } from "../store/reducers/cityReducer";
 import { useEffect, useState } from "react";
-import React from "react";
 
 export default function Itinerary() {
-    const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [liked, setLiked] = useState(false); // Estado para gestionar el like
-    const citySelected = useParams().id;
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { id: citySelected } = useParams();
 
-    const { city, itineraries } = useSelector((state) => {
-        const city = state.cities.cities.find((city) => city._id === citySelected);
-        const itineraries = city?.itinerary ? [city.itinerary] : [];
-        return { city, itineraries };
-    });
-    function handleNavigate(){
-        navigate('/cities')
-    }
+  const [open, setOpen] = useState(false);
+  const [liked, setLiked] = useState(false);
 
-    useEffect(() => {
-        dispatch(fetchCities());
-    }, [dispatch]);
+  const { city, itineraries } = useSelector((state) => {
+    const c = state.cities.cities.find((x) => x._id === citySelected);
+    const its = c?.itinerary ? [c.itinerary] : [];
+    return { city: c, itineraries: its };
+  });
 
-    if (!city) {
-        return <p>City not found</p>;
-    }
+  useEffect(() => {
+    dispatch(fetchCities());
+  }, [dispatch]);
 
-    return (
-        <>
-            <div className="sm:block hidden border-gray-200">
-                <div className="w-full h-40"></div>
-                <div className="container mx-auto px-4 py-8">
-                    {/* Header */}
-                    <div className="text-center mb-8 flex justify-center  flex-col-reverse">
-                        <h1 className="text-4xl font-bold text-gray-800">{city.name}</h1>
-                    <button className=" bg-blue-500 text-white text-sm font-semibold w-32 h-16 ml-16 rounded hg" onClick={() => handleNavigate()}>
-                        Cities
-                    </button>
-                    </div>
+  if (!city) return <p className="text-center py-24 text-slate-400">City not found</p>;
 
-                    {/* City Image and Details */}
-                    <div className="flex flex-wrap justify-center mb-8 ">
-                        <div className="w-full border-2 border-gray-300 rounded-lg overflow-hidden shadow-md h-4/5">
-                            <img className="w-full h-full object-cover" src={city.photo} alt={city.name} />
-                        </div>
-                        <div className="w-full mt-4 p-4 bg-gray-100 border-2 border-gray-300 rounded-lg shadow-md ">
-                            <div className="flex justify-between items-center mb-4">
-                                <span className="bg-blue-500 text-white px-3 py-1 rounded-md">{city.badge}</span>
-                                <span className="text-gray-600 text-sm">{city.continent}, {city.country}</span>
-                            </div>
-                            <p className="text-gray-700 text-base">{city.description}</p>
-                        </div>
-                    </div>
+  const likeCount = (it) => (liked ? (it.likes || 0) + 1 : it.likes || 0);
 
-                    {/* Itineraries Section */}
-                    <div className="w-full lg:w-3/4 mx-auto mt-10">
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Itineraries</h2>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-900 text-slate-100">
 
-                        {/* Check if itineraries exist and display them */}
-                        {itineraries && itineraries.length > 0 ? (
-                            <div className="space-y-6">
-                                {itineraries.map((itinerary) => (
-                                    <div key={itinerary._id} className="p-4 bg-white shadow-md rounded-lg border border-gray-300 h-full">
-                                        <div className="flex items-center mb-4">
-                                            <img src={itinerary.photoPerson} alt={itinerary.namePerson} className="w-16 h-16 rounded-full mr-4" />
-                                            <div>
-                                                <p className="text-gray-600 font-semibold text-lg">{itinerary.nameActivity}</p>
-                                                <h3 className="text-md">By {itinerary.namePerson}</h3>
-                                            </div>
-                                        </div>
-                                        <img src={itinerary.photoActivity} alt={itinerary.nameActivity} className="w-full h-96 object-cover rounded-lg mb-4" />
-                                        <div className="flex justify-between items-center mb-2">
-                                            {/* Mostrar precio como billetes */}
-                                            <div className="flex items-center">
-                                                <span className="text-gray-600 mr-2">Price:</span>
-                                                {[...Array(itinerary.price)].map((_, index) => (
-                                                    <img key={index} src="https://cdn-icons-png.freepik.com/128/1479/1479433.png" alt="price-icon" className="w-6 h-6 mr-1" />
-                                                ))}
-                                            </div>
-                                            <span className="text-gray-600">Duration: {itinerary.duration} Hs</span>
-                                            {/* Like button con animación */}
-                                            <button onClick={() => setLiked(!liked)} className="flex items-center">
-                                                <img
-                                                    src={liked ? "https://cdn-icons-png.freepik.com/512/15118/15118349.png" : "https://cdn-icons-png.freepik.com/512/14351/14351140.png"}
-                                                    alt="like-icon"
-                                                    className={`w-6 h-6 ${liked ? "w-6 h-6" : ""}`}
-                                                />
-                                                <span className="text-gray-600 ml-1">{liked ? itinerary.likes + 1 : itinerary.likes}</span>
-                                            </button>
-                                        </div>
-                                        <div className="flex flex-wrap">
-                                            {itinerary.hashtags.map((hashtag, index) => (
-                                                <span key={index} className="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-full mr-2 mb-2">
-                                                    {hashtag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                        <div className="rounded-lg px-2 py- flex justify-center items-center border-2 mt-4 flex-col">
-                                        <div className="bg-slate-300 my-3 rounded-md flex flex-col p-2">
-                                                <p>View More</p>
-                                                    </div>
-                                            <button
-                                                className="hover:bg-slate-300 active:bg-slate-400 w-10 flex justify-center rounded-md bg-slate-200 p-1"
-                                                onClick={() => setOpen(!open)}
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M11.47 13.28a.75.75 0 0 0 1.06 0l7.5-7.5a.75.75 0 0 0-1.06-1.06L12 11.69 5.03 4.72a.75.75 0 0 0-1.06 1.06l7.5 7.5Z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M11.47 19.28a.75.75 0 0 0 1.06 0l7.5-7.5a.75.75 0 1 0-1.06-1.06L12 17.69l-6.97-6.97a.75.75 0 0 0-1.06 1.06l7.5 7.5Z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-gray-500 italic text-center">No itineraries yet for this city</p>
-                        )}
-                        {/* Div desplegable con mensaje de construcción */}
-                        <div className={`${open ? "max-h-96" : "max-h-0"} flex flex-wrap justify-center transition-all duration-300 overflow-hidden bg-gray-800 rounded-lg`}>
-                            {open && (
-                                <div className="w-full flex flex-col items-center text-white text-center space-y-4 p-4">
-                                    <p className="text-lg italic">This section is under construction!</p>
-                                    <img className="w-12 h-12 object-cover" src="https://cdn-icons-png.freepik.com/512/8176/8176754.png" alt="icon" />
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+      <div className="h-28" />
+
+      <section className="relative w-full">
+        <div
+          className="relative h-[42vh] sm:h-[48vh] lg:h-[56vh] w-full overflow-hidden"
+        >
+          <img
+            src={city.photo}
+            alt={city.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px]" />
+          <div className="relative max-w-6xl mx-auto h-full px-4 flex items-end">
+            <div className="pb-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight drop-shadow">
+                {city.name}
+              </h1>
+              <p className="mt-2 text-slate-200/90">
+                {city.continent} • {city.country}
+              </p>
+              <button
+                onClick={() => navigate("/cities")}
+                className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold
+                           bg-slate-800/70 border border-slate-700 hover:bg-slate-700 active:bg-slate-600
+                           transition-colors duration-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                Back to Cities
+              </button>
             </div>
-            {/* =============================================================================== */}
-            <div className="sm:hidden">
-                <div className="w-full h-40"></div>
-                <div className="container mx-auto px-4 py-8">
-                    {/* Header */}
-                    <div className="text-center mb-8 flex justify-center  flex-col-reverse">
-                        <h1 className="text-4xl font-bold text-gray-800">{city.name}</h1>
-                    <button className=" bg-blue-500 text-white text-sm font-semibold w-24 h-10 ml-2 rounded hg" onClick={() => handleNavigate()}>
-                        Cities
-                    </button>
-                    </div>
+          </div>
+        </div>
+      </section>
 
-                    {/* City Image and Details */}
-                    <div className="flex flex-wrap justify-center mb-8 ">
-                        <div className="w-full border-2 border-gray-300 rounded-lg overflow-hidden shadow-md h-4/5">
-                            <img className="w-full h-full object-cover" src={city.photo} alt={city.name} />
-                        </div>
-                        <div className="w-full mt-4 p-4 bg-gray-100 border-2 border-gray-300 rounded-lg shadow-md ">
-                            <div className="flex justify-between items-center mb-4">
-                                <span className="bg-blue-500 text-white px-3 py-1 rounded-md">{city.badge}</span>
-                                <span className="text-gray-600 text-sm">{city.continent}, {city.country}</span>
-                            </div>
-                            <p className="text-gray-700 text-base">{city.description}</p>
-                        </div>
-                    </div>
+      <section className="max-w-6xl mx-auto px-4 py-10">
 
-                    {/* Itineraries Section */}
-                    <div className="w-full lg:w-3/4 mx-auto mt-10">
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Itineraries</h2>
-
-                        {/* Check if itineraries exist and display them */}
-                        {itineraries && itineraries.length > 0 ? (
-                            <div className="space-y-6">
-                                {itineraries.map((itinerary) => (
-                                    <div key={itinerary._id} className="p-4 bg-white shadow-md rounded-lg border border-gray-300">
-                                        <div className="flex items-center mb-4">
-                                            <img src={itinerary.photoPerson} alt={itinerary.namePerson} className="w-12 h-12 rounded-full mr-4" />
-                                            <div>
-                                                <p className="text-gray-600 font-semibold text-md">{itinerary.nameActivity}</p>
-                                                <h3 className="text-md">By {itinerary.namePerson}</h3>
-                                            </div>
-                                        </div>
-                                        <img src={itinerary.photoActivity} alt={itinerary.nameActivity} className="w-full h-48 object-cover rounded-lg mb-4" />
-                                        <div className=" mb-2  inline-block">
-                                            {/* Mostrar precio como billetes */}
-                                            <div className="flex items-center p-1">
-                                                <span className="text-gray-600 mr-2">Price:</span>
-                                                
-                                                {[...Array(itinerary.price)].map((_, index) => (
-                                                    <img key={index} src="https://cdn-icons-png.freepik.com/128/1479/1479433.png" alt="price-icon" className="w-6 h-6 mr-1" />
-                                                ))}
-                                            </div>
-                                            <span className="text-gray-600 p-1">Duration: {itinerary.duration} Hs</span>
-                                            {/* Like button con animación */}
-                                            <button onClick={() => setLiked(!liked)} className="flex items-center">
-                                                <img
-                                                    src={liked ? "https://cdn-icons-png.freepik.com/512/15118/15118349.png" : "https://cdn-icons-png.freepik.com/512/14351/14351140.png"}
-                                                    alt="like-icon"
-                                                    className={`w-6 h-6 ${liked ? "w-6 h-6" : ""}`}
-                                                />
-                                                <span className="text-gray-600 ml-1 p-2">{liked ? itinerary.likes + 1 : itinerary.likes}</span>
-                                            </button>
-                                        </div>
-
-
-
-                                        <div className="flex flex-wrap">
-                                            {itinerary.hashtags.map((hashtag, index) => (
-                                                <span key={index} className="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-full mr-2 mb-2">
-                                                    {hashtag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                        <div className="rounded-lg px-2 py-1 flex justify-center items-center border-2 mt-4 flex-col">
-                                                <div className="bg-slate-300 my-3 rounded-md">
-                                                <p>View More</p>
-                                                    </div>
-                                            <button
-                                                className="hover:bg-slate-300 active:bg-slate-400 w-10 flex justify-center rounded-md bg-slate-200 p-1"
-                                                onClick={() => setOpen(!open)}
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M11.47 13.28a.75.75 0 0 0 1.06 0l7.5-7.5a.75.75 0 0 0-1.06-1.06L12 11.69 5.03 4.72a.75.75 0 0 0-1.06 1.06l7.5 7.5Z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M11.47 19.28a.75.75 0 0 0 1.06 0l7.5-7.5a.75.75 0 1 0-1.06-1.06L12 17.69l-6.97-6.97a.75.75 0 0 0-1.06 1.06l7.5 7.5Z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-gray-500 italic text-center">No itineraries yet for this city</p>
-                        )}
-                        {/* Div desplegable con mensaje de construcción */}
-                        <div className={`${open ? "max-h-96" : "max-h-0"} flex flex-wrap justify-center transition-all duration-300 overflow-hidden bg-gray-800 rounded-lg`}>
-                            {open && (
-                                <div className="w-full flex flex-col items-center text-white text-center space-y-4 p-4">
-                                    <p className="text-lg italic">This section is under construction!</p>
-                                    <img className="w-12 h-12 object-cover" src="https://cdn-icons-png.freepik.com/512/8176/8176754.png" alt="icon" />
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-4 sm:p-6 shadow-xl">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="inline-flex items-center rounded-full bg-cyan-500/20 text-cyan-300 px-3 py-1 text-xs font-semibold border border-cyan-400/30">
+                  {city.badge}
+                </span>
+                <span className="text-sm text-slate-300">{city.continent}, {city.country}</span>
+              </div>
+              <p className="mt-4 text-slate-200/90 leading-relaxed">
+                {city.description}
+              </p>
             </div>
-        </>
-    );
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-4 sm:p-6 shadow-xl">
+            <div className="aspect-video w-full overflow-hidden rounded-xl ring-1 ring-white/10">
+              <img
+                src={city.photo}
+                alt={city.name}
+                className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+              />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-slate-300">
+              <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2">
+                <p className="opacity-70">Country</p>
+                <p className="font-semibold text-slate-100">{city.country}</p>
+              </div>
+              <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2">
+                <p className="opacity-70">Continent</p>
+                <p className="font-semibold text-slate-100">{city.continent}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Itineraries</h2>
+
+          {itineraries && itineraries.length > 0 ? (
+            <div className="mt-6 space-y-8">
+              {itineraries.map((it) => (
+                <article
+                  key={it._id}
+                  className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-xl overflow-hidden"
+                >
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={it.photoPerson}
+                        alt={it.namePerson}
+                        className="h-14 w-14 sm:h-16 sm:w-16 rounded-full object-cover ring-1 ring-white/20"
+                      />
+                      <div>
+                        <p className="text-base sm:text-lg font-semibold text-slate-100">{it.nameActivity}</p>
+                        <p className="text-sm text-slate-300">By {it.namePerson}</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 overflow-hidden rounded-xl ring-1 ring-white/10">
+                      <img
+                        src={it.photoActivity}
+                        alt={it.nameActivity}
+                        className="w-full h-[240px] sm:h-[320px] object-cover transition-transform duration-500 hover:scale-[1.02]"
+                      />
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-slate-300">Price:</span>
+                        <div className="flex items-center">
+                          {Array.from({ length: it.price || 0 }).map((_, idx) => (
+                            <img
+                              key={idx}
+                              src="https://cdn-icons-png.freepik.com/128/1479/1479433.png"
+                              alt="price-icon"
+                              className="h-5 w-5 sm:h-6 sm:w-6"
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      <span className="text-slate-300">Duration: {it.duration} Hs</span>
+
+                      <button
+                        onClick={() => setLiked((v) => !v)}
+                        className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm
+                                   bg-white/5 border border-white/10 hover:bg-white/10 active:bg-white/15
+                                   transition-colors"
+                      >
+                        <img
+                          src={
+                            liked
+                              ? "https://cdn-icons-png.freepik.com/512/15118/15118349.png"
+                              : "https://cdn-icons-png.freepik.com/512/14351/14351140.png"
+                          }
+                          alt="like"
+                          className={`h-5 w-5 sm:h-6 sm:w-6 ${liked ? "animate-pulse" : ""}`}
+                        />
+                        <span className="text-slate-200">{likeCount(it)}</span>
+                      </button>
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {(it.hashtags || []).map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 rounded-full text-xs font-semibold
+                                     bg-cyan-500/15 text-cyan-200 border border-cyan-400/20"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 border-t border-white/10 pt-4">
+                      <div className="flex items-center justify-between">
+                        <p className="text-slate-300">View more</p>
+                        <button
+                          onClick={() => setOpen((v) => !v)}
+                          className="rounded-md p-2 bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 transition"
+                          aria-expanded={open}
+                          aria-controls={`more-${it._id}`}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                               fill="currentColor" className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}>
+                            <path fillRule="evenodd"
+                                  d="M11.47 13.28a.75.75 0 001.06 0l7.5-7.5a.75.75 0 10-1.06-1.06L12 11.69 5.03 4.72a.75.75 0 10-1.06 1.06l7.5 7.5Z"
+                                  clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <div
+                        id={`more-${it._id}`}
+                        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4">
+                            <p className="text-sm text-slate-300">
+                              This section is under construction! Soon you’ll find activities, schedules,
+                              tips and more details for <span className="font-semibold text-slate-100">{it.nameActivity}</span>.
+                            </p>
+                            <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
+                              <img
+                                className="h-6 w-6"
+                                src="https://cdn-icons-png.freepik.com/512/8176/8176754.png"
+                                alt="construction"
+                              />
+                              Coming soon
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-6 text-slate-400 italic text-center">No itineraries yet for this city</p>
+          )}
+        </div>
+      </section>
+    </div>
+  );
 }
