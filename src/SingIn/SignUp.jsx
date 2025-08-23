@@ -1,210 +1,73 @@
-import React, { useState, useEffect } from "react";
-import { fetchCountries } from "../store/reducers/cityReducer"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+export default function SignUp() {
+  const navigate = useNavigate();
+  const [showPass, setShowPass] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "", photo: "", country: "" });
 
-const RegisterForm = () => {
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("SignUp submit", form);
+  };
 
-
-    const LoginWithGoogle = () => {
-        window.location.href = "http://localhost:8080/api/auth/signin/google";
-    };
-    const [formData, setFormData] = useState({
-        name: "",
-        lastName: "",
-        email: "",
-        password: "",
-        photoUrl: "",
-        country: "",
-    });
-    const [countries, setCountries] = useState([]); // Estado para almacenar los países
-    const [loading, setLoading] = useState(true); // Estado para el indicador de carga
-    const [error, setError] = useState(null);
-    console.log(countries);
-    
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError(null);
-
-
-
-        try {
-            const response = await fetch("http://localhost:8080/api/users/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                setError(errorData.message || "Failed to register. if you have an account log in")
-
-                return;
-            }
-
-            const data = await response.json();
-            alert("User registered successfully!");
-            console.log("Success:", data);
-        } catch (err) {
-            console.error("Network error:", err);
-            setError("A network error occurred. Please try again.");
-        }
-    };
-
-
-
-    useEffect(() => {
-        // Función para obtener los datos
-        const getCountries = async () => {
-            try {
-                const data = await fetchCountries(); // Llama a la función
-                setCountries(data.response); // Guarda los datos en el estado
-            } catch (error) {
-                setError('No se pudo traer la información'); // Maneja el error
-            } finally {
-                setLoading(false); // Finaliza el indicador de carga
-            }
-            
-        };
-
-        getCountries(); // Llama a la función al montar el componente
-    }, []);
-    // Muestra un mensaje de carga
-    if (loading) return <p>Cargando países...</p>;
-
-    // Muestra un mensaje de error si ocurrió un problema
-    if (error) return <p>Error: {error}</p>;
-
-    return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Register</h2>
-                {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="Enter your name"
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            placeholder="Enter your last name"
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Enter your email"
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            placeholder="Enter your password"
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Photo URL</label>
-                        <input
-                            type="url"
-                            name="photoUrl"
-                            value={formData.photoUrl}
-                            onChange={handleChange}
-                            placeholder="Enter your photo URL"
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Country</label>
-                        <input
-                            type="select"
-                            name="country"
-                            value={formData.country}
-                            onChange={handleChange}
-                            placeholder="Enter your country"
-                            
-                            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            required
-                            
-                        />
-                    </div>
-                    <select name="country" id=""
-                    value={formData.country} onChange={handleChange} required
-                    >
-                                            {countries.map((country,index) => (
-                            <option key={index} name="country" type="select" >
-                                {country.name}    
-                            </option>
-                        ))}
-                    </select>
-
-                    {/* <select name="country" id="">
-                        {countries.map((country,index) => (
-                            <option key={index} name="country" type="select" value={formData.country} onChange={handleChange} required>
-                                {country.name}    
-                            </option>
-                        ))}
-                    </select> */}
-                    {/* <div>
-                        <h1>Lista de Países</h1>
-                        <ul>
-                            {countries.map((country,index) => (
-                                <li key={index}>{country.response}</li> // Ajusta según tu estructura de datos
-                            ))}
-                        </ul>
-                    </div> */}
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-500 text-white font-medium py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    >
-                        Register
-                    </button>
-                    <button
-                        type="submit"
-                        className="w-full bg-slate-500 text-white font-medium py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-4"
-                        onClick={() => LoginWithGoogle()}>
-                        Login GOOGlE
-                    </button>
-                </form>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+      <div className="h-28" />
+      <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-16 py-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div className="hidden lg:block relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md">
+            <img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1600&auto=format&fit=crop" alt="new account" className="w-full h-[520px] object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/20 to-transparent" />
+            <div className="absolute bottom-0 p-8">
+              <h2 className="text-3xl font-bold">Create your account</h2>
+              <p className="text-slate-300/90">Join thousands planning smarter trips</p>
             </div>
+          </div>
+          <div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-xl">
+              <div className="flex items-center justify-between mb-4">
+                <h1 className="text-2xl font-bold">Sign up</h1>
+                <button onClick={() => navigate("/")} className="btn btn-muted">Home</button>
+              </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-slate-300 mb-1">Name</label>
+                    <input type="text" name="name" required value={form.name} onChange={handleChange} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 placeholder:text-slate-400/70 focus:outline-none focus:ring-2 focus:ring-cyan-500/40" placeholder="Your name" />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-slate-300 mb-1">Country</label>
+                    <input type="text" name="country" value={form.country} onChange={handleChange} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 placeholder:text-slate-400/70 focus:outline-none focus:ring-2 focus:ring-cyan-500/40" placeholder="e.g. Colombia" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-300 mb-1">Email</label>
+                  <input type="email" name="email" required value={form.email} onChange={handleChange} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 placeholder:text-slate-400/70 focus:outline-none focus:ring-2 focus:ring-cyan-500/40" placeholder="you@email.com" />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-slate-300 mb-1">Password</label>
+                    <div className="relative">
+                      <input type={showPass ? "text" : "password"} name="password" required value={form.password} onChange={handleChange} className="w-full h-12 pr-11 px-4 rounded-xl bg-white/5 border border-white/10 placeholder:text-slate-400/70 focus:outline-none focus:ring-2 focus:ring-cyan-500/40" placeholder="••••••••" />
+                      <button type="button" onClick={() => setShowPass(!showPass)} className="absolute inset-y-0 right-3 flex items-center text-slate-300/80 hover:text-white">{showPass ? "Hide" : "Show"}</button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-slate-300 mb-1">Photo URL</label>
+                    <input type="url" name="photo" value={form.photo} onChange={handleChange} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 placeholder:text-slate-400/70 focus:outline-none focus:ring-2 focus:ring-cyan-500/40" placeholder="https://..." />
+                  </div>
+                </div>
+                <button type="submit" className="w-full btn btn-solid btn-lg">Create account</button>
+                <p className="text-sm text-slate-300 text-center">Already have an account?{" "}
+                  <button type="button" className="underline decoration-dotted underline-offset-4 hover:text-white" onClick={() => navigate('/singIn')}>Sign in</button>
+                </p>
+              </form>
+            </div>
+          </div>
         </div>
-    );
-};
-
-export default RegisterForm;
-
-
+      </div>
+    </div>
+  );
+}
